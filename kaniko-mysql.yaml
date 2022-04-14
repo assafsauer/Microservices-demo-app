@@ -8,7 +8,7 @@ spec:
     image: gcr.io/kaniko-project/executor:latest
     args:
     - "--context=git://github.com/assafsauer/Microservices-demo-app.git#refs/heads/mysql"
-    - "--destination=asauer/mysql:1.0"
+    - "--destination=asauer/mysql:1.1"
     volumeMounts:
     - name: kaniko-secret
       mountPath: /kaniko/.docker
