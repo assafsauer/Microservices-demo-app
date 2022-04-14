@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: kaniko-web
+  name: kaniko-mysql
 spec:
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:latest
     args:
-    - "--context=git://github.com/assafsauer/Microservices-demo-app.git#refs/heads/web"
-    - "--destination=asauer/web:1.0"
+    - "--context=git://github.com/assafsauer/Microservices-demo-app.git#refs/heads/mysql"
+    - "--destination=asauer/mysql:1.0"
     volumeMounts:
     - name: kaniko-secret
       mountPath: /kaniko/.docker
