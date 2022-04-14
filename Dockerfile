@@ -12,18 +12,19 @@ COPY config.sh /root/
 COPY config.sh /tmp/
 RUN chmod 777 /tmp/config.sh
 RUN /tmp/config.sh
+RUN apt-get install sudo
 
 COPY scripts/* /docker-entrypoint-initdb.d/
 
 #RUN /entrypoint.sh mysqld & while [ ! -f /tmp/finished ]; do sleep 10; done
 #RUN rm /docker-entrypoint-initdb.d/*
 
-RUN service mysql stop
-RUN usermod -d /var/lib/mysql/ mysql
-RUN service mysql start
+RUN sudo service mysql stop
+RUN sudo usermod -d /var/lib/mysql/ mysql
+RUN sudo service mysql start
 
 RUN sleep 30
 
 COPY datadog /tmp/
 
-RUN mysql < /tmp/datadog
+RUN sudo mysql < /tmp/datadog
