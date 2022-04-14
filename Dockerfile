@@ -1,39 +1,17 @@
-FROM alpine AS build
-ARG KEY
+FROM mysql:5.7
 
-WORKDIR /instana
+VOLUME /data
 
-RUN apk add --update --no-cache curl
+ENV MYSQL_ALLOW_EMPTY_PASSWORD=yes \
+    MYSQL_DATABASE=cities \
+    MYSQL_USER=shipping \
+    MYSQL_PASSWORD=secret
 
-RUN if [ -n "$KEY" ]; then curl \
-    --output instana.zip \
-    --user "_:$KEY" \
-    https://artifact-public.instana.io/artifactory/shared/com/instana/nginx_tracing/1.1.2/linux-amd64-glibc-nginx-1.20.1.zip && \
-    unzip instana.zip && \
-    mv glibc-libinstana_sensor.so libinstana_sensor.so && \
-    mv glibc-nginx-1.20.1-ngx_http_ot_module.so ngx_http_opentracing_module.so; \
-    else echo "KEY not provided. Not adding tracing"; \
-    touch dummy.so; \
-    fi
+# change datadir entry in /etc/mysql/my.cnf
+COPY config.sh /root/
+RUN /root/config.sh
 
+COPY scripts/* /docker-entrypoint-initdb.d/
 
-FROM nginx:1.20.1
-
-EXPOSE 8080
-
-ENV CATALOGUE_HOST=catalogue \
-    USER_HOST=user \
-    CART_HOST=cart \
-    SHIPPING_HOST=shipping \
-    PAYMENT_HOST=payment \
-    RATINGS_HOST=ratings \
-    INSTANA_SERVICE_NAME=nginx-web
-
-# Instana tracing
-COPY --from=build /instana/*.so /tmp/
-
-COPY entrypoint.sh /root/
-ENTRYPOINT ["/root/entrypoint.sh"]
-
-COPY default.conf.template /etc/nginx/conf.d/default.conf.template
-COPY static /usr/share/nginx/html
+#RUN /entrypoint.sh mysqld & while [ ! -f /tmp/finished ]; do sleep 10; done
+#RUN rm /docker-entrypoint-initdb.d/*
