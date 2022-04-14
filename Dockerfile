@@ -18,7 +18,6 @@ COPY scripts/* /docker-entrypoint-initdb.d/
 #RUN /entrypoint.sh mysqld & while [ ! -f /tmp/finished ]; do sleep 10; done
 #RUN rm /docker-entrypoint-initdb.d/*
 
-RUN service mysql restart
-
-COPY datadog /tmp/
-RUN mysql < /tmp/datadog
+#RUN service mysql restart
+#COPY datadog /tmp/
+#RUN mysql < /tmp/datadog
