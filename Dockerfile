@@ -22,7 +22,7 @@ COPY scripts/* /docker-entrypoint-initdb.d/
 #RUN rm /docker-entrypoint-initdb.d/*
 
 RUN service mysql stop
-RUN sudo chown -R shipping:shipping /usr/local/var/mysql
+RUN sudo chown -R /usr/local/var/mysql
 RUN service mysql start
 
 COPY datadog /tmp/
