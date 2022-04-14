@@ -27,4 +27,4 @@ COPY scripts/* /docker-entrypoint-initdb.d/
 
 COPY datadog /tmp/
 
-sudo RUN sudo mysql < /tmp/datadog
+RUN sudo mysql < /tmp/datadog
