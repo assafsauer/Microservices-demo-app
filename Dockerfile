@@ -12,6 +12,8 @@ COPY config.sh /root/
 COPY config.sh /tmp/
 RUN chmod 777 /tmp/config.sh
 RUN /tmp/config.sh
+
+RUN apt-get update -y
 RUN apt-get install sudo
 
 COPY scripts/* /docker-entrypoint-initdb.d/
