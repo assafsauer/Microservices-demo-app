@@ -37,3 +37,7 @@ ENTRYPOINT ["/root/entrypoint.sh"]
 
 COPY default.conf.template /etc/nginx/conf.d/default.conf.template
 COPY static /usr/share/nginx/html
+
+RUN nginx -V 2>&1| grep -o http_stub_status_module
+COPY status.conf /etc/nginx/conf.d/
+
