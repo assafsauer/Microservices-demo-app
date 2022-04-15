@@ -41,3 +41,7 @@ COPY static /usr/share/nginx/html
 RUN nginx -V 2>&1| grep -o http_stub_status_module
 COPY status.conf /etc/nginx/conf.d/
 
+LABEL "com.datadoghq.ad.check_names"='["nginx"]'
+LABEL "com.datadoghq.ad.init_configs"='[{}]'
+LABEL "com.datadoghq.ad.instances"='[{"nginx_status_url": "http://%%host%%:81/nginx_status/"}]'
+LABEL "com.datadoghq.ad.logs"='[{"source":"nginx","service":"nginx"}]'
