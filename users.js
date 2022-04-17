@@ -20,6 +20,8 @@ db.createUser({
   "roles": [
     { role: "read", db: "admin" },
     { role: "clusterMonitor", db: "admin" },
-    { role: "read", db: "local" }
+    { role: "read", db: "local" },
+    { role: "read", db: "users" },
+    { role: "read", db: "catalogue" }
   ]
 })
