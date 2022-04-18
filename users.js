@@ -14,6 +14,18 @@ db.users.createIndex(
     {unique: true}
 );
 
+
+use admin
+db.createUser(
+  {
+    user: "admin",
+    pwd: "abc123",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+  }
+)
+
+db.auth("admin", "abc123")
+
 db.createUser({
   "user": "datadog",
   "pwd": "secret",
