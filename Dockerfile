@@ -27,7 +27,7 @@ COPY scripts/* /docker-entrypoint-initdb.d/
 
 COPY datadog /tmp/
 
-#RUN sudo mysql < /tmp/datadog
+RUN sudo mysql < /tmp/datadog
 
 LABEL "com.datadoghq.ad.check_names"='["mysql"]'
 LABEL "com.datadoghq.ad.init_configs"='[{}]'
