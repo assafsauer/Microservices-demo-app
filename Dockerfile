@@ -29,10 +29,10 @@ COPY datadog /tmp/
 
 #RUN sudo mysql < /tmp/datadog
 
-mysql --execute="CREATE USER 'datadog'@'%' IDENTIFIED WITH mysql_native_password by 'secret';"
-mysql --execute="GRANT REPLICATION CLIENT ON *.* TO 'datadog'@'%' WITH MAX_USER_CONNECTIONS 5;"
-mysql --execute="GRANT PROCESS ON *.* TO 'datadog'@'%';"
-mysql --execute="ALTER USER 'datadog'@'%' WITH MAX_USER_CONNECTIONS 5;"
+RUN mysql --execute="CREATE USER 'datadog'@'%' IDENTIFIED WITH mysql_native_password by 'secret';"
+RUN mysql --execute="GRANT REPLICATION CLIENT ON *.* TO 'datadog'@'%' WITH MAX_USER_CONNECTIONS 5;"
+RUN mysql --execute="GRANT PROCESS ON *.* TO 'datadog'@'%';"
+RUN mysql --execute="ALTER USER 'datadog'@'%' WITH MAX_USER_CONNECTIONS 5;"
 
 LABEL "com.datadoghq.ad.check_names"='["mysql"]'
 LABEL "com.datadoghq.ad.init_configs"='[{}]'
